@@ -50,8 +50,6 @@ mv ./tmp/hostapd.conf /etc/hostapd/hostapd.conf
 mv ./tmp/dhcpcd.conf /etc/dhcpcd.conf
 mv ./tmp/dnsmasq.conf /etc/dnsmasq.conf
 
-rm -r ./tmp
-
 systemctl start dhcpcd
 systemctl start wpa_supplicant
 systemctl start dnsmasq

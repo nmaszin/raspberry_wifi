@@ -5,6 +5,8 @@ if [[ $EUID -ne 0 ]]; then
 	exit
 fi
 
+rm -r ./tmp/
+
 # Unnstall packages
 apt purge -y dnsmasq hostapd
 

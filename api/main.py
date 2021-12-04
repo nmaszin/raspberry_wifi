@@ -1,7 +1,7 @@
-from flask import Flask, abort
+from flask import Flask, abort, request
 import wifi
 
-INTERFACE = 'wlp3s0'
+INTERFACE = 'wlan0'
 PORT = 9997
 
 
@@ -17,8 +17,8 @@ def list_available_networks():
 
 @app.route('/', methods=['POST'])
 def connect_to_network():
-    ssid = request.form['ssid']
-    password = request.form['password']
+    ssid = request.json['ssid']
+    password = request.json['password']
 
     if wifi.try_to_connect(ssid, password):
         return {

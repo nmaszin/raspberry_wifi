@@ -1,6 +1,7 @@
 import subprocess
 import shutil
 import utils
+from pathlib import Path
 
 @utils.to_list
 def get_available_networks(interface):
@@ -10,18 +11,21 @@ def get_available_networks(interface):
         if 'ESSID' in line:
             yield line.strip().split(':')[1][1:-1]
 
-def try_to_connect(interface, ssid, password):
-    with open('../config/wpa_supplicant.conf') as f:
+def try_to_connect(ssid, password):
+    with open('./configs/wpa_supplicant.conf') as f:
         data = f.read()
 
     data = data.replace('#SSID#', ssid)
     data = data.replace('#PASSWORD#', password)
     
-    with open('../tmp/wpa_supplicant.conf', 'w') as f:
+    with open('./tmp/wpa_supplicant.conf', 'w') as f:
         f.write(data)
 
-    shutil.move('../tmp/wpa_supplicant.conf', '/etc/wpa_supplicant/wpa_supplicant.conf')
+    print(data)
+
+    shutil.move('./tmp/wpa_supplicant.conf', '/etc/wpa_supplicant/wpa_supplicant.conf')
     return_code = subprocess.call(['systemctl', 'restart', 'wpa_supplicant'])
+    print(return_code)
     
     return return_code == 0
 
