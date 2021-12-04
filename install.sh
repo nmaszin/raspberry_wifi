@@ -34,10 +34,10 @@ systemctl stop wpa_supplicant
 systemctl stop dhcpcd
 
 # Backup configs
-mv /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant_conf.original
-mv /etc/dnsmasq.conf /etc/dnsmasq.conf.original
-mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.original
-mv /etc/dhcpd.conf /etc/dhcpd.conf.original
+mv /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant_conf.original 2> /dev/null
+mv /etc/dnsmasq.conf /etc/dnsmasq.conf.original 2> /dev/null
+mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.original 2> /dev/null
+mv /etc/dhcpd.conf /etc/dhcpd.conf.original 2> /dev/null
 
 # Setup configs
 mkdir -p ./tmp
