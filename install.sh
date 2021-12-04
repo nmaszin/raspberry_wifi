@@ -26,6 +26,8 @@ python3 -m pip install flask pyopenssl
 
 systemctl stop dnsmasq
 systemctl stop hostapd
+systemctl stop wpa_supplicant
+systemctl stop dhcpcd
 
 # Backup configs
 mv /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant_conf.original
@@ -36,18 +38,20 @@ mv /etc/dhcpd.conf /etc/dhcpd.conf.original
 # Setup configs
 mkdir -p ./tmp
 cat configs/hostapd.conf | sed "s/#SSID#/$SSID/" | sed "s/#PASSWORD#/$PASSWORD/" | sed "s/#INTERFACE#/$INTERFACE/" > ./tmp/hostapd.conf
-cat configs/dhcpd.conf | sed "s/#INTERFACE#/$INTERFACE/" | sed "s/#IP#/$RASPBERRY_IP\/$NETWORK_MASK/" > ./tmp/dhcpd.conf
+cat configs/dhcpcd.conf | sed "s/#INTERFACE#/$INTERFACE/" | sed "s/#IP#/$RASPBERRY_IP\/$NETWORK_MASK/" > ./tmp/dhcpcd.conf
 cat configs/dnsmasq.conf | sed "s/#INTERFACE#/$INTERFACE/" | sed "s/#FIRST_IP#/$FIRST_IP/" | sed "s/#LAST_IP#/$LAST_IP/" | sed "s/#RASPBERRY_IP#/$RASPBERRY_IP/" | sed "s/#DOMAIN#/$DOMAIN/"  > ./tmp/dnsmasq.conf
 
 # Move configs
 mv ./tmp/hostapd.conf /etc/hostapd/hostapd.conf
-mv ./tmp/dhcpd.conf /etc/dhcpd.conf
+mv ./tmp/dhcpcd.conf /etc/dhcpcd.conf
 mv ./tmp/dnsmasq.conf /etc/dnsmasq.conf
 
 rm -r ./tmp
 
 systemctl enable dnsmasq
 systemctl enable hostapd
+systemctl start dhcpcd
+systemctl start wpa_supplicant
 systemctl start dnsmasq
 systemctl start hostapd
 
