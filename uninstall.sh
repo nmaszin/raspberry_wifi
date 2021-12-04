@@ -8,6 +8,13 @@ fi
 # Unnstall packages
 apt purge -y dnsmasq hostapd
 
+# Remove configs
+rm /etc/wpa_supplicant/wpa_supplicant.conf
+rm /etc/dnsmasq.conf
+rm /etc/hostapd/hostapd.conf
+rm /etc/dhcpcd.conf
+
+
 # Backup configs
 mv /etc/wpa_supplicant/wpa_supplicant.conf.original /etc/wpa_supplicant/wpa_supplicant.conf 2> /dev/null
 mv /etc/dnsmasq.conf.original /etc/dnsmasq.conf 2> /dev/null
