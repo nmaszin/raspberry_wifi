@@ -24,6 +24,10 @@ fi
 apt install -y dnsmasq hostapd
 python3 -m pip install flask pyopenssl
 
+systemctl unmask hostapd
+systemctl enable hostapd
+systemctl enable dnsmasq
+
 systemctl stop dnsmasq
 systemctl stop hostapd
 systemctl stop wpa_supplicant
@@ -48,8 +52,6 @@ mv ./tmp/dnsmasq.conf /etc/dnsmasq.conf
 
 rm -r ./tmp
 
-systemctl enable dnsmasq
-systemctl enable hostapd
 systemctl start dhcpcd
 systemctl start wpa_supplicant
 systemctl start dnsmasq
